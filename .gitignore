@@ -133,7 +133,7 @@ target/
 # Created by .ignore support plugin (hsz.mobi)
 
 db.sqlite3
-db.py
+#db.py
 media/*
 desktop.ini
 .DS_Store

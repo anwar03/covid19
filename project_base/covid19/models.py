@@ -13,4 +13,3 @@ class Covid(models.Model):
 
     def __str__(self):
         return self.country.name + ' ' + str(self.created_at)
-

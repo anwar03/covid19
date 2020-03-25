@@ -10,5 +10,3 @@ class Dashboard(APIView):
     def get(self, request):
         dashboard = 'Covid 19 Dashboard'
         return Response({'dashboard': dashboard})
-
-
