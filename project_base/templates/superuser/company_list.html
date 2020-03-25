@@ -1,0 +1,82 @@
+{% extends 'superuser/home.html' %}
+{% load i18n static rest_framework %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        {% trans "Company List" %}
+                    </h3>
+                    <div class="dataTables_length pull-right">
+                        <ul class="list-inline text-left no-bottom-margin">
+                            <li>
+                                <a role="button" href="{% url 'url_company_create' %}"
+                                   class="btn btn-primary btn-sm"><i
+                                        class="fa fa-plus fa-user-plus"></i> {% trans "Create Company" %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="dataTables_wrapper form-inline dt-bootstrap">
+                        {% if companies %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-hover table-striped dataTable" role="grid">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1" aria-label="Browser: activate to sort column ascending"
+                                                style="width: 342px;">{% trans "Company name" %}
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1" aria-label="Platform(s): activate to sort column ascending"
+                                                style="width: 306px;">{% trans "Admin" %}
+                                            </th>
+
+                                            <th class="sorting text-center" tabindex="0" aria-controls="example1"
+                                                rowspan="1"
+                                                colspan="1"
+                                                aria-label="Engine version: activate to sort column ascending"
+                                                style="width: 243px;">{% trans "Action" %}
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for company in companies %}
+
+                                            <tr role="row" class="{% cycle 'odd' 'even' %}">
+                                                <td><a href="#">{{ company.name }}</a></td>
+                                                <td></td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-success btn-xs"
+                                                       href="{% url 'url_company_update' company_pk=company.id %}">
+                                                        {% trans 'Edit' %}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                {% include 'commons/pagination.html' %}
+                            </div>
+                        {% else %}
+                            <div class="no-record-found">
+                                <i class="fa fa-list fa-5x" aria-hidden="true"></i>
+                                <p class="lead">{% trans "No Company record found" %} <br>
+                                    <span class="subheader">{% trans "To add a Project click 'Add Company' button" %}</span>
+                                </p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block extra_js %}
+{% endblock extra_js %}

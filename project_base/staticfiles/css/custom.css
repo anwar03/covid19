@@ -1,0 +1,116 @@
+.no-record-found {
+    text-align: center;
+    padding: 40px 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #cccccc;
+}
+
+/* button dropdown left show*/
+.dropdown_leftify {
+    right: 0;
+    left: auto;
+    min-width: 60px;
+}
+
+.form-section-title {
+    font-size: 16px;
+    border-bottom: 1px solid #00c0ef;
+    margin-top: 4px;
+    margin-bottom: 20px;
+    line-height: 30px;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+p{
+    margin: 0;
+}
+
+.profile .pro-img{
+    width: 120px;
+    height: 120px;
+    border: 3px solid #eeeeee;
+}
+
+.update-profile .pro-img{
+    width: 80px;
+    height: 80px;
+}
+.dataTables_length .no-bottom-margin{
+    margin: 0;
+}
+
+.profile-box .profile-header{
+    border-bottom: 1px solid #eaeaea;
+    margin: 0 10px;
+    padding: 10px 0;
+}
+
+.project-overview{
+    display: inline-flex;
+}
+
+.project-overview .overview{
+    border-right: 2px solid black;
+    min-width: 500px;
+    padding: 10px 80px;
+}
+
+.overview .member{
+    padding: 0 30px 20px;
+}
+.overview .title{
+    margin: 0;
+    padding: 10px 0;
+}
+
+
+.project-overview .finances{
+    min-width: 500px;
+    padding: 10px 80px;
+}
+
+.finances .title{
+    margin: 0;
+    padding: 10px 0;
+}
+
+.pl-0{
+    padding-left: 0 !important;
+}
+
+.padding-25{
+    padding: 5px 25px;
+}
+
+.employee_form .employee{
+    padding: 5px 25px;
+}
+
+.employee_form .employee_label{
+    border-bottom: 1px solid #e5e5e5;
+    display: block;
+    margin-bottom: 20px;
+}
+.employee_form .employee_text{
+    margin: 0px;
+    font-size: 21px;
+    line-height: 30px;
+}
+
+.employee_form .contact{
+    padding: 5px 25px;
+}
+
+.min_height{
+    min-height: 100px;
+}

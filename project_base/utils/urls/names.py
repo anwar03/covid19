@@ -1,0 +1,2 @@
+# dashboard urls
+dashboard = 'dashboard'
