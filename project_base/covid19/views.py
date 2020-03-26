@@ -14,10 +14,16 @@ class Dashboard(APIView):
     template_name = 'dashboard/dashboard.html'
 
     def get(self, request):
-        confirmed = Covid.objects.filter(created_at='2020-03-23').aggregate(Sum('confirmed'))['confirmed__sum']
-        death = Covid.objects.filter(created_at='2020-03-23').aggregate(Sum('death'))['death__sum']
-        recovered = Covid.objects.filter(created_at='2020-03-23').aggregate(Sum('recovered'))['recovered__sum']
-        countries = Covid.objects.values('country_id').distinct().count()
+        day = '2020-03-23'
+        confirmed_count = Covid.objects.filter(created_at=day).aggregate(Sum('confirmed'))['confirmed__sum']
+        death_count = Covid.objects.filter(created_at=day).aggregate(Sum('death'))['death__sum']
+        recovered_count = Covid.objects.filter(created_at=day).aggregate(Sum('recovered'))['recovered__sum']
+        countries_count = Covid.objects.filter(created_at=day).values('country_id').distinct().count()
+
+        confirmed = 0 if confirmed_count is None else confirmed_count
+        death = 0 if death_count is None else death_count
+        recovered = 0 if recovered_count is None else recovered_count
+        countries = 0 if countries_count is None else countries_count
 
         return Response({'confirmed': confirmed, 'death': death, 'recovered': recovered, 'countries': countries})
 
