@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Covid(models.Model):
-    country = models.ForeignKey(to='contact.Country', on_delete=models.SET_NULL, null=True, blank=True)
+    country = models.ForeignKey(to='contact.Country', on_delete=models.SET_NULL, related_name='covid', verbose_name=_('countries'), null=True, blank=True)
     confirmed = models.IntegerField(verbose_name=_('confirmed'), default=0, null=True, blank=True)
     death = models.IntegerField(verbose_name=_('death'), default=0, null=True, blank=True)
     recovered = models.IntegerField(verbose_name=_('recovered'), default=0, null=True, blank=True)

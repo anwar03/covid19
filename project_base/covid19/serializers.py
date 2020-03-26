@@ -32,3 +32,12 @@ class Covid19Serializer(serializers.ModelSerializer):
             return value
         except ValueError:
             return False
+
+
+class CountryWiseSerializer(serializers.ModelSerializer):
+    """ Return country wise information with country name."""
+    country = serializers.StringRelatedField()
+
+    class Meta:
+        model = Covid
+        fields = ['id', 'country', 'confirmed', 'death', 'recovered', 'created_at', 'latitude', 'longitude']

@@ -1,11 +1,11 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.generics import RetrieveUpdateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import RetrieveUpdateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db.models import Sum, Count
 from .models import Covid
-from .serializers import Covid19Serializer
+from .serializers import Covid19Serializer, CountryWiseSerializer
 
 
 class Dashboard(APIView):
@@ -28,7 +28,7 @@ class Dashboard(APIView):
         return Response({'confirmed': confirmed, 'death': death, 'recovered': recovered, 'countries': countries})
 
 
-class Covid19CreateAPIView(CreateAPIView):
+class Covid19CreateAPIView( CreateAPIView ):
     """ Covid19CreateAPIView Created for creating everyday country-wise information."""
     permission_classes = (IsAuthenticated, )
     serializer_class = Covid19Serializer
@@ -37,11 +37,22 @@ class Covid19CreateAPIView(CreateAPIView):
         return super(Covid19CreateAPIView, self).perform_create(serializer)
 
 
-class Covid19CountryDataUpdateApiView(RetrieveUpdateDestroyAPIView):
+class Covid19CountryDataUpdateApiView( RetrieveUpdateDestroyAPIView ):
     """ Covid19CountryDataUpdateApiView created for  updating specific  information."""
     permission_classes = ( IsAuthenticated, )
     serializer_class = Covid19Serializer
 
     def get_queryset(self):
         queryset = Covid.objects.filter(id=self.kwargs['pk'])
+        return queryset
+
+
+class CountryWiseListAPIView( ListAPIView ):
+    """ CountryWiseListAPIView API created to retrieving all countries' specific information."""
+    permission_classes = (AllowAny, )
+    serializer_class = CountryWiseSerializer
+
+    def get_queryset(self):
+        day = '2020-03-23'
+        queryset = Covid.objects.filter(created_at=day)
         return queryset
