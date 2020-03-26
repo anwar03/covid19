@@ -45,3 +45,10 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ['id', 'line1', 'line2', 'zip', 'state', 'city', 'country']
+
+
+class CountrySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Country
+        fields = ['id', 'name', 'country_code2', 'dialing_code']

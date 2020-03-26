@@ -1,8 +1,8 @@
 from django.urls import path
 
-from covid19.views import Dashboard
+from .. import views
 from utils.urls.names import dashboard
 
 urlpatterns = [
-    path('', Dashboard.as_view(), name=dashboard),
+    path('', views.Dashboard.as_view(), name=dashboard),
 ]
