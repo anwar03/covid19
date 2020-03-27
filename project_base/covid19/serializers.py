@@ -1,7 +1,5 @@
-from datetime import datetime
 from rest_framework import serializers
 from .models import Covid
-from contact.serializers import CountrySerializer
 
 
 class Covid19Serializer(serializers.ModelSerializer):
@@ -36,6 +34,8 @@ class Covid19Serializer(serializers.ModelSerializer):
 
 class CountryWiseSerializer(serializers.ModelSerializer):
     """ Return country wise information with country name."""
+
+    # StringRelatedField used  for getting country name instead of ForeignKey
     country = serializers.StringRelatedField()
 
     class Meta:

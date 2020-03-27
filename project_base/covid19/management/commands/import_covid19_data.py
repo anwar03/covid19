@@ -10,9 +10,9 @@ class Command(BaseCommand):
     def ImportCovid19Data(self):
         """ Import covid19 data from GitHub repository to covid19 table that manipulates everyday data."""
 
-        confirmed_url = 'time_series_19-covid-Confirmed.csv'
-        deaths_url = 'time_series_19-covid-Deaths.csv'
-        recovered_url = 'time_series_19-covid-Recovered.csv'
+        confirmed_url = 'data/time_series_19-covid-Confirmed.csv'
+        deaths_url = 'data/time_series_19-covid-Deaths.csv'
+        recovered_url = 'data/time_series_19-covid-Recovered.csv'
 
         self.processImportData(confirmed_url, deaths_url, recovered_url)
 
