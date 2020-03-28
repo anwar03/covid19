@@ -1,6 +1,8 @@
 # Coronavirus disease (COVID-19) Situation
 Dockerizing Django rest framework with Postgres
 
+![dashboard](https://user-images.githubusercontent.com/6695296/77828919-98997800-7148-11ea-92c2-268814a6a09c.png)
+
 ## prerequisite
 
 1. git
