@@ -12,7 +12,9 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
     <script src="/static/js/datamaps.world.min.js"></script>
-<!--    <script src="http://datamaps.github.io/scripts/0.4.4/datamaps.world.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+
 
     <script>
 
@@ -104,6 +106,53 @@
                             '</div>'].join('');
                     }
                 });
+              },
+              error: function(data){
+              }
+           });
+        });
+
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            var labels = new Array();
+            var confirmed = new Array();
+           $.ajax({
+              type: "GET",
+              url: "http://127.0.0.1:8080/api/covid19/newcase/",
+              success: function(data){
+                 var i=0;
+                 for( i = 0; i<data.length; i++){
+                    day = new Date(data[i].created_at)
+                    day = day.toDateString().split(' ')
+                    day = day[1] + " " + day[2];
+                    labels.push(day);
+                    confirmed.push(data[i].confirmed);
+                 }
+
+                 var horizontal_chart = new Chart(document.getElementById("bar-chart-horizontal"), {
+                    type: 'horizontalBar',
+                    data: {
+                      labels: labels,
+                      datasets: [
+                        {
+                          label: "New Cases: ",
+                          backgroundColor: "#3e95cd",
+                          data: confirmed
+                        }
+                      ]
+                    },
+                    options: {
+                      legend: { display: false },
+                      title: {
+                        display: true,
+                        text: 'Cases by date of report'
+                      }
+                    }
+                });
+
               },
               error: function(data){
               }
