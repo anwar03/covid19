@@ -9,4 +9,107 @@
 {% endblock %}
 {% block extra_js %}
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="/static/js/datamaps.world.min.js"></script>
+<!--    <script src="http://datamaps.github.io/scripts/0.4.4/datamaps.world.min.js"></script>-->
+
+    <script>
+
+        function rescaleWorld(datamap) {
+          datamap.svg
+            .selectAll('g')
+            .attr('transform', 'translate(' + d3.event.translate + ') scale(' + d3.event.scale + ')');
+        }
+
+        function rescaleBubbles(datamap) {
+            var bubbleBorder = 0;
+
+          datamap.svg
+            .selectAll('.datamaps-bubble')
+            .attr('r', bubbleRadius / d3.event.scale)
+            .style('stroke-width', (bubbleBorder / d3.event.scale) + 'px');
+        }
+        var worldMap = new Datamap({
+            element: document.getElementById('world-map'),
+            scope: 'world',
+            done: function(datamap) {
+                datamap.svg.call(d3.behavior.zoom().on('zoom', redraw));
+
+                function redraw() {
+                  datamap.svg.select('g')
+                    .selectAll('path')
+                    .style('vector-effect', 'non-scaling-stroke');
+
+                  rescaleWorld(datamap);
+                  rescaleBubbles(datamap);
+                }
+            },
+            projection: 'equirectangular',
+            fills: {
+              defaultFill: '#ABDDA4'
+            },
+            geographyConfig: {
+                dataUrl: null,
+                hideAntarctica: true,
+                borderWidth: 1,
+                borderColor: '#FDFDFD',
+                popupTemplate: function(geography, data) {
+                  return '<div class="hoverinfo"><strong>' + geography.properties.name + '</strong></div>';
+                },
+                popupOnHover: true, //disable the popup while hovering
+                highlightOnHover: true,
+                highlightFillColor: '#FC8D59',
+                highlightBorderColor: 'rgba(250, 15, 160, 0.2)',
+                highlightBorderWidth: 2
+            },
+            bubblesConfig: {
+                borderWidth: 1,
+                borderColor: '#FFFFFF',
+                popupOnHover: true,
+                popupTemplate: function(geography, data) {
+                  return '<div class="hoverinfo"><strong>' + data.name + '</strong></div>';
+                },
+                fillColor: '#e38b4f',
+                fillOpacity: 0.75,
+                highlightOnHover: true,
+                highlightFillColor: '#e38b4f',
+                highlightBorderColor: 'rgba(227, 139, 79, 0.2)',
+                highlightBorderWidth: 0,
+                highlightFillOpacity: 0.85
+            },
+            arcConfig: {
+              strokeColor: '#DD1C77',
+              strokeWidth: 1,
+              arcSharpness: 1,
+              animationSpeed: 600
+            }
+        });
+
+        $(document).ready(function () {
+           $.ajax({
+              type: "GET",
+              url: "http://127.0.0.1:8080/api/covid19/",
+              success: function(data){
+                 var i=0;
+                 for( i = 0; i<data.length; i++){
+                    data[i]['radius'] = data[i].confirmed % 17;
+                 }
+                 worldMap.bubbles(data, {
+                    popupTemplate: function (geo, item) {
+                            return ['<div class="hoverinfo">' +
+                            '<br/>Confirmed : ' +  item.confirmed,
+                            '<br/>Country : ' +  item.country + '',
+                            '<br/>Date : ' +  item.created_at + '',
+                            '</div>'].join('');
+                    }
+                });
+              },
+              error: function(data){
+              }
+           });
+        });
+
+    </script>
+
 {% endblock %}
