@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('dashboard/', include('covid19.urls.dashboard')),
+    path('', include('covid19.urls.dashboard')),
     path('api/covid19/', include('covid19.urls.covid19')),
     path('admin/', admin.site.urls),
 ]

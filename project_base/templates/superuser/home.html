@@ -88,10 +88,10 @@
             }
         });
 
-        $(document).ready(function () {
+        var covid19Data = function (url) {
            $.ajax({
               type: "GET",
-              url: "http://127.0.0.1:8080/api/covid19/",
+              url: url,
               success: function(data){
                  var i=0;
                  for( i = 0; i<data.length; i++){
@@ -110,18 +110,18 @@
               error: function(data){
               }
            });
-        });
+        }
 
     </script>
 
     <script>
 
-        $(document).ready(function () {
+         var getNewCase = function(url){
             var labels = new Array();
             var confirmed = new Array();
            $.ajax({
               type: "GET",
-              url: "http://127.0.0.1:8080/api/covid19/newcase/",
+              url: url,
               success: function(data){
                  var i=0;
                  for( i = 0; i<data.length; i++){
@@ -157,6 +157,64 @@
               error: function(data){
               }
            });
+        }
+
+
+        var countryData = function(url){
+
+           $.ajax({
+              type: "GET",
+              url: url,
+              success: function(data){
+                 var i=0;
+                 var country = $('#country-data');
+                 for( i = 0; i<data.length; i++){
+                    var Str = "<li class='country-list' onclick='searchData("+JSON.stringify(data[i].country)+");'>"+data[i].country + " : "+ data[i].confirmed +"</li>";
+                    country.append(Str);
+                 }
+              },
+              error: function(data){
+              }
+           });
+        }
+
+        var dashboardData = function(url){
+
+           $.ajax({
+              type: "GET",
+              url: url,
+              success: function(data){
+                 $("#confirmed").html(data['confirmed']);
+                 $("#death").html(data['death']);
+                 $("#recovered").html(data['recovered']);
+                 $("#countries").html(data['countries']);
+              },
+              error: function(data){
+              }
+           });
+        }
+
+        var searchData = function(country){
+            console.log('country ', country);
+            newCaseUrl = "http://127.0.0.1:8080/api/covid19/newcase/?country="+country;
+            covid19Url = "http://127.0.0.1:8080/api/covid19/";
+            countryUrl = "http://127.0.0.1:8080/api/covid19/countrydata/?country="+country;
+            dashboardUrl = "http://127.0.0.1:8080/dashboard/?country="+country;
+            getNewCase(newCaseUrl);
+            covid19Data(covid19Url);
+            countryData(countryUrl);
+            dashboardData(dashboardUrl);
+        }
+
+        $(document).ready(function (){
+            newCaseUrl = "http://127.0.0.1:8080/api/covid19/newcase/";
+            covid19Url = "http://127.0.0.1:8080/api/covid19/";
+            countryUrl = "http://127.0.0.1:8080/api/covid19/countrydata/";
+            dashboardUrl = "http://127.0.0.1:8080/dashboard/";
+            getNewCase(newCaseUrl);
+            covid19Data(covid19Url);
+            countryData(countryUrl);
+            dashboardData(dashboardUrl);
         });
 
     </script>

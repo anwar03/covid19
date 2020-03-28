@@ -41,3 +41,15 @@ class CountryWiseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Covid
         fields = ['id', 'country', 'confirmed', 'death', 'recovered', 'created_at', 'latitude', 'longitude']
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    """ Return country wise information with country name."""
+
+    # StringRelatedField used  for getting country name instead of ForeignKey
+    country = serializers.StringRelatedField()
+
+    class Meta:
+        model = Covid
+        fields = ['id', 'country', 'confirmed']
+        read_only_fields = ('id', )

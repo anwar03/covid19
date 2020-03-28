@@ -58,12 +58,11 @@ class Command(BaseCommand):
             return msg
 
         DateList = self.dateParse(list(confirmed_df.columns))
-
+        print("wait few moment....")
         for tempCountry in confirmed_df['Country/Region']:
             for item in DateList:
                 lat = confirmed_df[confirmed_df['Country/Region']==tempCountry]['Lat'][list(confirmed_df[ confirmed_df['Country/Region'] == tempCountry ].index)[0]]
                 long = confirmed_df[confirmed_df['Country/Region']==tempCountry]['Long'][list(confirmed_df[ confirmed_df['Country/Region'] == tempCountry ].index)[0]]
-                print(tempCountry, item )
                 temp_confirm = confirmed_df[ confirmed_df['Country/Region'] == tempCountry ][ item ][list(confirmed_df[ confirmed_df['Country/Region'] == tempCountry ].index)[0]]
                 temp_death = deaths_df[ deaths_df['Country/Region'] == tempCountry ][ item ][list(deaths_df[ deaths_df['Country/Region'] == tempCountry ].index)[0]]
                 temp_recover = recovered_df[ recovered_df['Country/Region'] == tempCountry ][ item ][list(recovered_df[ recovered_df['Country/Region'] == tempCountry ].index)[0]]
@@ -103,3 +102,4 @@ class Command(BaseCommand):
                     return msg
 
             print(tempCountry)
+        print("Import Done")
